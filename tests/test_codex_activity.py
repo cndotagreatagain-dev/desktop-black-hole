@@ -85,7 +85,7 @@ def test_large_initial_log_is_bounded_and_uses_recent_metadata(tmp_path):
 
 
 def test_only_an_explicit_valid_task_id_can_be_bound(tmp_path):
-    task_id = '01a062a1-47a3-7cb1-b9f7-4c48e4d1d63f'
+    task_id = '00000000-0000-4000-8000-000000000123'
     directory = tmp_path/'sessions'/'2026'/'09'/'02'
     directory.mkdir(parents=True)
     path = directory/f'rollout-test-{task_id}.jsonl'

@@ -7,6 +7,7 @@ ENGLISH = {
     "状态来源": "Status sources",
     "Codex 总状态": "Codex overall status",
     "DSH 总状态（可选）": "DSH overall status (optional)",
+    "DSH 接入向导": "DSH setup guide",
     "安装 Codex 接入（无需 Python）": "Install Codex integration (no Python required)",
     "移除本黑洞的 Codex 接入": "Remove this app's Codex integration",
     "始终置顶": "Always on top",
@@ -18,6 +19,14 @@ ENGLISH = {
     "恢复默认大小": "Restore default size",
     "在当前屏幕居中": "Center on current screen",
     "退出": "Quit",
+    "开机启动（当前用户）": "Start with Windows (current user)",
+    "开机启动": "Windows startup",
+    "默认关闭；仅在当前用户登录 Windows 时启动，无需管理员权限。移动程序后请重新开关一次。":
+        "Off by default. Starts when this user signs in, without administrator rights. Toggle off/on after moving the app.",
+    "开机启动不可用：启动器缺失、路径过长、权限不足或存在同名非本程序启动项。":
+        "Startup unavailable: missing launcher, long path, insufficient permission or a conflicting startup entry.",
+    "无法更改开机启动。请检查启动器路径与权限；同名的其他启动项不会被覆盖。":
+        "Could not change startup. Check the launcher path and permissions; unrelated entries are not overwritten.",
     "语言 / Language": "Language / 语言",
     "本机总状态灯": "Local overall status",
     "实时读取本机桌面，不录制。关闭后恢复普通透明效果。":
@@ -57,7 +66,7 @@ def activity_detail(activity, language: str) -> str:
             "Unknown or disconnected does not mean idle.\n"
             "Codex: install the local integration, review its commands in /hooks, "
             "then restart Codex and send a message.\n"
-            "DSH: optional; load the included local status plugin. Enabling the "
+            "DSH: open Status sources > DSH setup guide to load the included local plugin. Enabling the "
             "source does not install or launch DSH.\n"
             "Status checks are local and do not call a model or consume tokens.")
 

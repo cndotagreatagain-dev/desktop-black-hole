@@ -31,7 +31,10 @@ def test_default_english_menu_switch_and_persistence(tmp_path):
             try:
                 actions = {a.text(): a for a in menu.actions()}
                 assert 'Cursor gravity' in actions
+                assert 'Start with Windows (current user)' in actions
                 assert 'Codex: Disconnected' in actions
+                sources = actions['Status sources'].menu()
+                assert 'DSH setup guide' in [a.text() for a in sources.actions()]
                 language = actions['Language / 语言'].menu()
                 assert [a.isChecked() for a in language.actions()] == [True, False]
                 language.actions()[1].trigger()

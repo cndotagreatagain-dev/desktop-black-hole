@@ -6,8 +6,8 @@ import sys
 
 
 def main(output):
-    from PySide6.QtCore import Qt, QTimer, QSettings
-    from PySide6.QtGui import QSurfaceFormat
+    from PySide6.QtCore import Qt, QTimer, QSettings, QPoint
+    from PySide6.QtGui import QSurfaceFormat, QContextMenuEvent
     from PySide6.QtWidgets import QApplication
     from OpenGL import GL
     from desktop_black_hole import DesktopBlackHole, configure_surface_format
@@ -51,7 +51,38 @@ def main(output):
             result['transparent']=window.testAttribute(Qt.WA_TranslucentBackground)
             result['frameless']=bool(window.windowFlags() & Qt.FramelessWindowHint)
             phase_index += 1
-            if phase_index == 3: app.quit()
+            if phase_index == 3:
+                def inspect_menu():
+                    menu=app.activePopupWidget()
+                    try:
+                        if menu is None:
+                            raise RuntimeError('Menu did not open')
+                        actions={a.text():a for a in menu.actions()}
+                        result['startup_menu']=('Start with Windows (current user)' in actions)
+                        sources=actions['Status sources'].menu()
+                        result['dsh_setup_menu']=('DSH setup guide' in [a.text() for a in sources.actions()])
+                        menu.grab().save(str(output/'menu-en.png'))
+                    except Exception as error:
+                        result['errors'].append(str(error))
+                    finally:
+                        if menu is not None: menu.close()
+                QTimer.singleShot(100, inspect_menu)
+                app.sendEvent(window, QContextMenuEvent(QContextMenuEvent.Mouse,
+                              QPoint(10,10), QPoint(100,100)))
+                from dsh_setup import DshSetupDialog, plugin_path
+                from autostart import startup_command
+                dialog=DshSetupDialog(window, 'en')
+                dialog.show()
+                app.processEvents()
+                dialog.grab().save(str(output/'dsh-setup-en.png'))
+                result['dsh_plugin_present']=plugin_path().is_file()
+                result['dsh_copy_enabled']=dialog.copy_button.isEnabled()
+                result['windowed_startup_command']=('python.exe' not in startup_command().lower())
+                dialog.reject()
+                if not all(result.get(key) for key in ('startup_menu','dsh_setup_menu',
+                        'dsh_plugin_present','dsh_copy_enabled','windowed_startup_command')):
+                    raise RuntimeError('New integration/startup UI checks failed')
+                app.quit()
             else: QTimer.singleShot(80,capture)
         except Exception as error: fail(error)
     window.fatal_error.connect(fail)

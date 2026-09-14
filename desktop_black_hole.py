@@ -2068,6 +2068,8 @@ class DesktopBlackHole(BlackHoleGLWidget):
                 action.setToolTip(activity_detail(self._source_activity[source], self._language))
                 action.triggered.connect(
                     lambda enabled, key=source: self._set_status_source(key, enabled))
+            from dsh_setup import show_dsh_setup
+            sources_menu.addAction("DSH 接入向导", lambda: show_dsh_setup(self))
             if getattr(sys, "frozen", False):
                 from packaged_status_setup import show_setup
                 sources_menu.addSeparator()
@@ -2118,6 +2120,8 @@ class DesktopBlackHole(BlackHoleGLWidget):
                 action.triggered.connect(
                     lambda checked=False, value=code: self.set_language(value))
                 language_group.addAction(action)
+            from autostart import add_startup_action
+            add_startup_action(menu, self)
             menu.addAction("退出", self.close)
             translate_menu(menu, self._language)
             menu.exec(event.globalPos())

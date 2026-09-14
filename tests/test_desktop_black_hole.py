@@ -436,7 +436,7 @@ def test_companion_global_scope_and_shutdown(
     desktop_window_factory, tmp_path, monkeypatch,
 ):
     from codex_status import GlobalActivity
-    task_id = "01a062a1-47a3-7cb1-b9f7-4c48e4d1d63f"
+    task_id = "00000000-0000-4000-8000-000000000123"
     monkeypatch.setenv("CODEX_THREAD_ID", task_id)
     # Resolve into a temporary empty source tree: unit tests never read real tasks.
     monkeypatch.setenv("CODEX_HOME", str(tmp_path / "codex"))
@@ -2947,6 +2947,7 @@ def test_right_click_menu_exposes_all_desktop_actions(
         "恢复默认大小",
         "在当前屏幕居中",
         "语言 / Language",
+        "开机启动（当前用户）",
         "退出",
     ]
     actions = {action.text(): action for action in captured_actions}

@@ -2,7 +2,9 @@
 
 This is a local-log adapter, not a streaming app-server connection. Message
 events mean recorded output activity, not a guarantee of live token streaming.
-No conversation text is retained, logged, sent, or written back.
+Legacy adapter, not used by the current overall-status monitor. Partial input
+lines may remain in memory until completed; conversation text is not logged,
+sent, or written back.
 """
 from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor

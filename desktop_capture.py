@@ -1,4 +1,7 @@
-"""Opt-in, local-only desktop ROI capture. No recording, network or cursor capture."""
+"""Local-only desktop ROI capture, enabled by default at normal app startup.
+
+The user can disable it in the menu. No recording, network or cursor capture.
+"""
 from __future__ import annotations
 
 import ctypes
